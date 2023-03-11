@@ -844,6 +844,9 @@
     // represents to update file list
     if(CardUpdate && lcd_sd_status && RTS_SD_Detected())
     {
+      if (!card.isPrinting()) {
+        RTS_SDCardInit();
+      }
       for(uint16_t i = 0;i < CardRecbuf.Filesum;i ++)
       {
         delay(1);
