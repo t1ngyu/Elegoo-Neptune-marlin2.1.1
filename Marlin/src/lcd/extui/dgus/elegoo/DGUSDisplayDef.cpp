@@ -647,7 +647,8 @@
         //显示文件名
         #if ENABLED(TJC_AVAILABLE)
           uint8_t page_num = ((num / 5) + 1);
-          TJC_SendCmd("file%d.t%d.txt=\"%s\"", page_num, num, CardRecbuf.Cardshowfilename[num]);       
+          TJC_SendCmd("file%d.t%d.font=1", page_num, num);
+          TJC_SendCmd("file%d.t%d.txt=\"%s\"", page_num, num, CardRecbuf.Cardshowfilename[num]);
         #endif
 
         CardRecbuf.Filesum = (++num);
@@ -1171,6 +1172,7 @@
                 {
                   rtscheck.RTS_SndData(CardRecbuf.Cardshowfilename[i], PRINT_FILE_TEXT_VP);
                   rtscheck.RTS_SndData(ExchangePageBase + 36, ExchangepageAddr);
+                  TJC_SendCmd("continueprint.t0.font=1");
                   TJC_SendCmd("continueprint.t0.txt=\"%s\"",CardRecbuf.Cardshowfilename[i]); //显示文件名
                   TJC_SendCmd("printpause.t0.txt=\"%s\"",CardRecbuf.Cardshowfilename[i]); //显示文件名
                   TJC_SendCmd("page continueprint");
@@ -5206,7 +5208,9 @@
           }
 
           //清标题
+          TJC_SendCmd("askprint.t0.font=1");
           TJC_SendCmd("askprint.t0.txt=\"\"");
+          TJC_SendCmd("printpause.t0.font=1");
           TJC_SendCmd("printpause.t0.txt=\"\"");
           RTS_SndData(CardRecbuf.Cardshowfilename[CardRecbuf.recordcount], SELECT_FILE_TEXT_VP);
           TJC_SendCmd("askprint.t0.txt=\"%s\"", CardRecbuf.Cardshowfilename[CardRecbuf.recordcount]);
